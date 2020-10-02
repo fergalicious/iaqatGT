@@ -19,8 +19,8 @@ nesne2 = new XMLHttpRequest();
 
 var myVar = setInterval(yolla, 3000)
 function yolla() {
-nesne1.open('get', 'Station1_Current.txt', true); 
-nesne2.open('get', 'Station2_Current.txt', true); 
+nesne1.open('get', 'data_work.txt', true); 
+nesne2.open('get', 'current.txt', true); 
 nesne1.onreadystatechange = cevap;
 nesne2.onreadystatechange = cevap;
 nesne1.send(null);
