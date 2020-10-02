@@ -1,0 +1,110 @@
+<html>
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+var nesne ;
+if(navigator.appName.search('Microsoft')>-1) { nesne = new ActiveXObject('MSXML2.XMLHTTP'); }
+else { nesne = new XMLHttpRequest(); }
+
+var myVar = setInterval(yolla, 3000)
+function yolla() {
+nesne.open('get', 'data.txt', true); 
+nesne.onreadystatechange= cevap;
+nesne.send(null);
+}
+
+var myVar2 = setInterval(cevap, 3000);
+function cevap() {
+if(nesne.readyState==4) {
+var co2 = document.getElementById('CO2');
+var pm1 = document.getElementById('PM1');
+var pm25 = document.getElementById('PM25');
+var pm10 = document.getElementById('PM10');
+var tempf = document.getElementById('tempf');
+var tempc = document.getElementById('tempc');
+var hum = document.getElementById('hum');
+//el.innerHTML = nesne.responseText;
+//var lines = el.innerHTML.split("\n");
+//var dog = document.getElementById('result');
+//dog.innerHTML = lines[lines.length-1];
+var original = nesne.responseText;
+var lines = original.split("\n");
+var lastLine = lines[lines.length-1];
+let separated = lastLine.split(',');
+co2.innerHTML = separated[1];
+pm1.innerHTML = separated[2];
+pm25.innerHTML = separated[3];
+pm10.innerHTML = separated[4];
+tempf.innerHTML = separated[5];
+tempc.innerHTML = separated[6];
+hum.innerHTML = separated[7];
+if (co2.innerHTML < 200) {
+	co2.style.backgroundColor = '#FF0000';
+}
+else {
+	co2.style.backgroundColor = '#00FF00';
+}
+
+
+//el.innerHTML = lines[lines.length-1];
+
+//#('bilgi').load('data.txt')
+}
+}
+
+
+/*var auto_refresh = setInterval(
+function ()
+{
+$('#load_data').load(cevap(response)).fadeIn("slow");
+}, 10000); // refresh every 10000 milliseconds
+*/
+
+
+</script>
+</head>
+<body style ="background-color:#B3A369"></body>
+<script>
+yolla()
+</script>
+
+<table center ="center">
+  <tr>
+    <th>Pollutant</th>
+    <th>Concentration</th>
+  </tr>
+  <tr>
+  	<td>Carbon Dioxide</td>
+    <td><div id="CO2"></div></td>
+  </tr>
+  <tr>
+  	<td>PM1.0</td>
+    <td><div id="PM1"></div></td>
+  </tr>
+  <tr>
+  	<td>PM2.5</td>
+    <td><div id="PM25"></div></td>
+  </tr>
+  <tr>
+  	<td>PM10</td>
+    <td><div id="PM10"></div></td>
+  </tr>
+    <tr>
+  	<td>tempf</td>
+    <td><div id="tempf"></div></td>
+  </tr>
+    <tr>
+  	<td>tempc</td>
+    <td><div id="tempc"></div></td>
+  </tr>
+    <tr>
+  	<td>hum</td>
+    <td><div id="hum"></div></td>
+  </tr>
+</table>
+</body>
+</html>
