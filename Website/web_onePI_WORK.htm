@@ -12,7 +12,7 @@ else { nesne = new XMLHttpRequest(); }
 
 var myVar = setInterval(yolla, 3000)
 function yolla() {
-nesne.open('get', 'data.txt', true); 
+nesne.open('get', 'current.txt', true); 
 nesne.onreadystatechange= cevap;
 nesne.send(null);
 }
