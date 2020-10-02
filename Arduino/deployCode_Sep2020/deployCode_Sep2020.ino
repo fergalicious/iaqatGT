@@ -127,8 +127,7 @@ if (sht.init()) {
 
 void loop()
 {
-
-  //K30
+    //K30
   sendRequest(readCO2);
   unsigned long valCO2 = getValue(response);
 
@@ -160,26 +159,39 @@ void loop()
  //H2S
   if(rSrO < maxRsRo_H2S && rSrO > minRsRo_H2S) {
  H2S_ppm = a_H2S * pow((float)rS / (float)rO, b_H2S);
-  } else {
- Serial.println("H2S Out of range.");
+  } else if (rSrO > maxRsRo_H2S) {
+ //Serial.println("H2S Out of range.");
+ H2S_ppm = a_H2S * pow(maxRsRo_H2S, b_H2S);
+  } else if (rSrO < minRsRo_H2S) {
+ H2S_ppm = 0;
   }
   //C7H8
    if(rSrO < maxRsRo_C7H8 && rSrO > minRsRo_C7H8) {
  C7H8_ppm = a_C7H8 * pow((float)rS / (float)rO, b_C7H8);
-  } else {
- Serial.println("C7H8 Out of range.");
+  } else if (rSrO > maxRsRo_C7H8) {
+ //Serial.println("C7H8 Out of range.");
+ C7H8_ppm = a_C7H8 * pow(maxRsRo_C7H8, b_C7H8);
+  } else if(rSrO < minRsRo_C7H8) {
+    C7H8_ppm = 0;
   }
+  
   //C2H5OH
    if(rSrO < maxRsRo_C2H5OH && rSrO > minRsRo_C2H5OH) {
  C2H5OH_ppm = a_C2H5OH * pow((float)rS / (float)rO, b_C2H5OH);
-  } else {
- Serial.println("C2H5OH Out of range.");
+  } else if (rSrO > maxRsRo_C2H5OH){
+ //Serial.println("C2H5OH Out of range.");
+ C2H5OH_ppm = a_C2H5OH * pow(maxRsRo_C2H5OH, b_C2H5OH);
+  } else if (rSrO < minRsRo_C2H5OH) {
+ C2H5OH_ppm = 0;
   }
   //NH3
    if(rSrO < maxRsRo_NH3 && rSrO > minRsRo_NH3) {
  NH3_ppm = a_NH3 * pow((float)rS / (float)rO, b_NH3);
-  } else {
- Serial.println("NH3 Out of range.");
+  } else if (rSrO > maxRsRo_NH3) {
+ //Serial.println("NH3 Out of range.");
+  NH3_ppm = a_NH3 * pow(maxRsRo_NH3, b_NH3);
+  } else if (rSrO < minRsRo_NH3) {
+ NH3_ppm = 0;
   }
 
   //Getting Averages
@@ -200,7 +212,7 @@ void loop()
     }
     
     else{
-    float CO2Average = averageValue(co2_Conc, i );  // average will be fractional, so float may be appropriate.
+    float CO2Average = averageValue(co2_Conc, i);  // average will be fractional, so float may be appropriate.
     float PM01Average = averageValue(PM01_Conc, i );
     float PM2_5Average = averageValue(PM2_5_Conc, i );
     float PM10_Average = averageValue(PM10_Conc, i );
