@@ -31,7 +31,7 @@ with serial.Serial( comport , 9600, timeout = 0.001) as arduino:
                 f.write(Time.strftime("%X") + ',')
                 f.write(line.decode('utf-8'))
             with open('/home/pi/Documents/Research/current1.txt','w') as f1:
-                f1.write(line.decode('utf-8'))
+                f1.write(Time.strftime("%X") + ','+line.decode('utf-8'))
             #below shows how to install package
             #sudo apt-get install libffi-dev
             #pip install scp
