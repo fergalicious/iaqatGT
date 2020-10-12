@@ -8,19 +8,22 @@
 
 var nesne1;
 var nesne2;
-if(navigator.appName.search('Microsoft')>-1) { 
+//if(navigator.appName.search('Microsoft')>-1) { 
   nesne1 = new ActiveXObject('MSXML2.XMLHTTP');
   nesne2 = new ActiveXObject('MSXML2.XMLHTTP');
    }
-else { 
+//else { 
 nesne1 = new XMLHttpRequest();
 nesne2 = new XMLHttpRequest();
 }
 
+nesne1 = new XMLHttpRequest();
+nesne2 = new XMLHttpRequest();
+
 var myVar = setInterval(yolla, 3000)
 function yolla() {
-nesne1.open('get', 'data_work.txt', true); 
-nesne2.open('get', 'current.txt', true); 
+nesne1.open('get', 'current1.txt', true); 
+nesne2.open('get', 'current2.txt', true); 
 nesne1.onreadystatechange = cevap;
 nesne2.onreadystatechange = cevap;
 nesne1.send(null);
@@ -115,9 +118,8 @@ function ()
 $('#load_data').load(cevap(response)).fadeIn("slow");
 }, 10000); // refresh every 10000 milliseconds
 
-
-
 </script>
+
 </head>
 <body style ="background-color:#B3A369"></body>
 <script>
