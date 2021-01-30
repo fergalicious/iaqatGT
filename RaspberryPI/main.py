@@ -31,23 +31,26 @@ with serial.Serial( comport , 9600, timeout = 0.001) as arduino:
                 f.write(Time.strftime("%X") + ',')
                 f.write(line.decode('utf-8'))
             with open('/home/pi/Documents/Research/current1.txt','w') as f1:
-                f1.write(line.decode('utf-8'))
+                f1.write(Time.strftime("%X") + ','+line.decode('utf-8'))
             #below shows how to install package
             #sudo apt-get install libffi-dev
             #pip install scp
-            '''
+            
             # connect to online domain
             ssh = paramiko.SSHClient()
             ssh.load_system_host_keys()
             #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(hostname='64.227.11.204',username='joy')
+            try:
+                ssh.connect(hostname='64.227.11.204',username='joy')
             
                # SCPCLient takes a paramiko transport as its only argument
-            scp= SCPClient(ssh.get_transport()) 
-            scp.put('/home/pi/Documents/Research/current2.txt', '/var/www/html/current2.txt')
-            #print '2'
-            scp.close()
-            #os.system('scp /home/pi/Documents/Research/current.txt joy@64.227.11.204:/var/www/html/current.txt')
+                scp= SCPClient(ssh.get_transport()) 
+                scp.put('/home/pi/Documents/Research/current1.txt', '/var/www/html/current1.txt')
+                #print '2'
+                scp.close()
+            except:
+                with open('/home/pi/Documents/Research/errorlog.txt','a') as f:
+                    f.write('Error occur at'+Time.strftime("%X")+' \n')
             #f.write('\n')
             #f.close()
-            '''
+            
